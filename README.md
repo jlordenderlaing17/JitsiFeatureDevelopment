@@ -10,12 +10,14 @@ Step 3: Open the terminal in your IDE (for Visual Studio Code, this is done with
 
 Step 4: In the terminal, type the command, "npm i" in order to install all of the dependencies the project requires. If the command is not found, then you should go back and see if you missed any steps involving installing node.
 
-Step 5: After letting the command finish, you should have a new folder called node_modules. You do not want to commit this folder when changes are made. Now, in the terminal, type the command "make"
+Step 5: The terminal may prompt you with dependency vulnerabilities. This is fixed easily by typing the command, "npm audit fix"
 
-Step 6: Once that command is done, with no errors, type the command, "make dev"
+Step 6: After letting the command finish, you should have a new folder called node_modules. You do not want to commit this folder when changes are made. Now, in the terminal, type the command "make"
 
-Step 7: Now the terminal should prompt you with a link to a localhost (typically 8080). Open the link, or type in the link into Chrome (Firefox should work, but Chrome is more reliable). 
+Step 7: Once that command is done, with no errors, type the command, "make dev"
 
-Step 8: If the page prompts you with some kind of security message, click a drop down and select the option to follow the link anyway. If this option is not available to you, then follow this link for the simple solution: https://stackoverflow.com/questions/35531347/localhost-blocked-on-chrome-with-privacy-error
+Step 8: Now the terminal should prompt you with a link to a localhost (typically 8080). Open the link, or type in the link into Chrome (Firefox should work, but Chrome is more reliable). 
+
+Step 9: If the page prompts you with some kind of security message, click a drop down and select the option to follow the link anyway. If this option is not available to you, then follow this link for the simple solution: https://stackoverflow.com/questions/35531347/localhost-blocked-on-chrome-with-privacy-error
 
 Once the code compiles in your terminal, the Jitsi Meet homepage opens, and then start a new conference and see the viewer.
