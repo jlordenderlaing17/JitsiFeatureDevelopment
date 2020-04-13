@@ -14,7 +14,7 @@ class AdComponent extends React.Component {
     render(){
         return(
             <div>
-                Ad attempt 1
+            Test component
             </ div>
         )
     }

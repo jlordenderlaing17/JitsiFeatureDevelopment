@@ -40,23 +40,16 @@ class LargeVideo extends Component<Props> {
     render() {
         return (
             <div
-                className = 'videocontainerdifferentclass'
+                className = 'videocontaineraltered'
                 id = 'largeVideoContainer'>
                 <div id = 'sharedVideo'>
                     <div id = 'sharedVideoIFrame' />
                 </div>
                 <div id = 'etherpad' />
-
-                <svg id = 'adPlaceHolder' width={screen.width} height={screen.height}>
-                    <circle id = 'adPlaceHolderItem' cx="0" cy="0" r={screen.width * 2} fill="purple" opacity="1.0"/>
-                </svg>
-
-                {/* <div id='layertesting'> layer testing</ div> */}
                 
 
                 <Watermarks />
                 
-                {addText()}
 
                 <div id = 'dominantSpeaker'>
                     <div className = 'dynamic-shadow' />
@@ -85,8 +78,6 @@ class LargeVideo extends Component<Props> {
                 {/* <svg width="900" height="9000">
                     <circle cx="25" cy="25" r="900" fill="purple" opacity="1.0"/>
                 </svg> */}
-                {createAd()}
-                {/* <div id = 'adTest'></ div> */}
                 {/* {timeAd()} */}
                 { interfaceConfig.DISABLE_TRANSCRIPTION_SUBTITLES
                     || <Captions /> }
@@ -95,28 +86,6 @@ class LargeVideo extends Component<Props> {
     }
 }
 
-function timeAd(){
-    setTimeout(() => {
-        document.getElementById('adTest').innerHTML = '';
-    }, 3000);
-}
-
-function addText(){
-    setTimeout(() => {
-    document.getElementById('susolosusia').style.zIndex = "12"
-    }, 3000);
-}
-
-function createAd(){
-    // node = this.node;
-    setTimeout(() => {
-        document.getElementById('adPlaceHolder').remove();
-    }, 7000);
-    //     .attr('cx', 30)
-    //     .attr('cy', 30)
-    //     .attr('r', 20);
-    // makeARect(appNode, '#000000', 100, 100, 500, 300, 1.0, 'adRect', 'adRectClass', '1', '1', '', '', '');
-}
 
 
 /**
