@@ -131,7 +131,6 @@ class Conference extends AbstractConference<Props, *> {
      * returns {void}
      */
     componentDidUpdate(prevProps) {
-        console.log('we are definitely in five nights at freddy\'s')
         if (this.props._shouldDisplayTileView
             === prevProps._shouldDisplayTileView) {
             return;
@@ -190,14 +189,10 @@ class Conference extends AbstractConference<Props, *> {
                     { hideVideoQualityLabel
                         || <Labels /> }
                     <Filmstrip filmstripOnly = { filmstripOnly } />
-                    <Toolbox />
                 </div>
 
-                
-                
                 { filmstripOnly || <Toolbox /> }
-                
-                { filmstripOnly || <Chat /> } 
+                { filmstripOnly || <Chat /> }
 
                 { this.renderNotificationsContainer() }
 

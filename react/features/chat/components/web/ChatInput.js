@@ -40,12 +40,7 @@ type Props = {
     /**
      * Boolean for chat to be censored.
      */
-    censoredChat: boolean,
-
-    /**
-     * Array of strings for added words to the censor
-     */
-    addedCensoredWords: Array<string>
+    censoredChat: boolean
 };
 
 /**
@@ -170,7 +165,6 @@ class ChatInput extends Component<Props, State> {
      * @returns {void}
      */
     _onDetectSubmit(event) {
-        // console.log(APP.store);
         if (event.keyCode === 13
             && event.shiftKey === false) {
             event.preventDefault();
@@ -178,15 +172,10 @@ class ChatInput extends Component<Props, State> {
             const filter = new Filter();
             let trimmed = '';
 
-            for (let i = 0; i < this.props.addedCensoredWords.length; i++) {
-                filter.addWords(this.props.addedCensoredWords[i]);
-            }
-
-            console.log(this.props.addedCensoredWords);
-
             console.log(this.props.censoredChat);
             if (this.props.censoredChat === true) {
                 if (filter.clean(this.state.message) !== this.state.message) {
+                    // trimmed = '[This message contains inappropriate content]';
                     trimmed = filter.clean(this.state.message);
                 } else if (filter.clean(this.state.message) === this.state.message) {
                     trimmed = this.state.message.trim();
@@ -275,8 +264,7 @@ class ChatInput extends Component<Props, State> {
 function mapStateToProps(state) {
 
     return {
-        censoredChat: state['features/chat'].isChatCensored,
-        addedCensoredWords: state['features/chat'].addedCensoredWords
+        censoredChat: state['features/chat'].isChatCensored
     };
 }
 

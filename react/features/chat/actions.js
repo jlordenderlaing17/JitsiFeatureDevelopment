@@ -6,9 +6,7 @@ import {
     SEND_MESSAGE,
     SET_PRIVATE_MESSAGE_RECIPIENT,
     TOGGLE_CHAT,
-    TOGGLE_CENSOR,
-    CENSOR_UPDATE,
-    RESET_FILTER
+    TOGGLE_CENSOR
 } from './actionTypes';
 
 /**
@@ -126,33 +124,5 @@ export function toggleChat() {
 export function toggleCensor() {
     return {
         type: TOGGLE_CENSOR
-    };
-}
-
-/**
- * Updates words to add to the censor library.
- *
- * @param {string} newWord - The new word to be added to the censor library.
- * @returns {{
- *     type: CENSOR_UPDATE
- * }}
- */
-export function addToCensorLibrary(newWord: string) {
-    return {
-        type: CENSOR_UPDATE,
-        newWord
-    };
-}
-
-/**
- * Resets the added words to the censor dictionary.
- *
- * @returns {{
- *     type: RESET_FILTER
- * }}
- */
-export function resetCensor() {
-    return {
-        type: RESET_FILTER
     };
 }

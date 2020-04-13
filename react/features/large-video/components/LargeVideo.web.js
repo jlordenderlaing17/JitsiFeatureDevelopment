@@ -1,16 +1,10 @@
 // @flow
 
 import React, { Component } from 'react';
-import { select } from 'd3-selection';
-import * as d3 from 'd3'
 
 import { Watermarks } from '../../base/react';
 import { Captions } from '../../subtitles/';
 import { connect } from '../../base/redux';
-import { makeACircle, makeSomeText, makeARect, makeALine } from './makeD3Things';
-
-let appNode;
-
 
 declare var interfaceConfig: Object;
 
@@ -30,7 +24,6 @@ type Props = {
  * @extends Component
  */
 class LargeVideo extends Component<Props> {
-    
     /**
      * Implements React's {@link Component#render()}.
      *
@@ -40,23 +33,14 @@ class LargeVideo extends Component<Props> {
     render() {
         return (
             <div
-                className = 'videocontainerdifferentclass'
+                className = 'videocontainer'
                 id = 'largeVideoContainer'>
                 <div id = 'sharedVideo'>
                     <div id = 'sharedVideoIFrame' />
                 </div>
                 <div id = 'etherpad' />
 
-                <svg id = 'adPlaceHolder' width={screen.width} height={screen.height}>
-                    <circle id = 'adPlaceHolderItem' cx="0" cy="0" r={screen.width * 2} fill="purple" opacity="1.0"/>
-                </svg>
-
-                {/* <div id='layertesting'> layer testing</ div> */}
-                
-
                 <Watermarks />
-                
-                {addText()}
 
                 <div id = 'dominantSpeaker'>
                     <div className = 'dynamic-shadow' />
@@ -82,40 +66,11 @@ class LargeVideo extends Component<Props> {
                             muted = { true } />
                     </div>
                 </div>
-                {/* <svg width="900" height="9000">
-                    <circle cx="25" cy="25" r="900" fill="purple" opacity="1.0"/>
-                </svg> */}
-                {createAd()}
-                {/* <div id = 'adTest'></ div> */}
-                {/* {timeAd()} */}
                 { interfaceConfig.DISABLE_TRANSCRIPTION_SUBTITLES
                     || <Captions /> }
             </div>
         );
     }
-}
-
-function timeAd(){
-    setTimeout(() => {
-        document.getElementById('adTest').innerHTML = '';
-    }, 3000);
-}
-
-function addText(){
-    setTimeout(() => {
-    document.getElementById('susolosusia').style.zIndex = "12"
-    }, 3000);
-}
-
-function createAd(){
-    // node = this.node;
-    setTimeout(() => {
-        document.getElementById('adPlaceHolder').remove();
-    }, 7000);
-    //     .attr('cx', 30)
-    //     .attr('cy', 30)
-    //     .attr('r', 20);
-    // makeARect(appNode, '#000000', 100, 100, 500, 300, 1.0, 'adRect', 'adRectClass', '1', '1', '', '', '');
 }
 
 

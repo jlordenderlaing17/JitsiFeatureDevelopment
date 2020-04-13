@@ -11,7 +11,6 @@ export { default as IconCamera } from './camera.svg';
 export { default as IconCameraDisabled } from './camera-disabled.svg';
 export { default as IconCancelSelection } from './cancel.svg';
 export { default as IconCensor } from './censor.svg';
-export { default as IconCensorReset } from './censorReset.svg';
 export { default as IconChat } from './chat.svg';
 export { default as IconChatSend } from './send.svg';
 export { default as IconChatUnread } from './chat-unread.svg';
