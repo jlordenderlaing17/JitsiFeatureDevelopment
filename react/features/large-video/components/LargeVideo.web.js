@@ -40,18 +40,18 @@ class LargeVideo extends Component<Props> {
     render() {
         return (
             <div
-                className = 'videocontainerzzzzz'
+                className = 'videocontainerdifferentclass'
                 id = 'largeVideoContainer'>
                 <div id = 'sharedVideo'>
                     <div id = 'sharedVideoIFrame' />
                 </div>
                 <div id = 'etherpad' />
 
-                <svg id = 'subway' width={screen.width} height={screen.height}>
-                    <circle id = 'jared' cx="0" cy="0" r={screen.width * 2} fill="purple" opacity="1.0"/>
+                <svg id = 'adPlaceHolder' width={screen.width} height={screen.height}>
+                    <circle id = 'adPlaceHolderItem' cx="0" cy="0" r={screen.width * 2} fill="purple" opacity="1.0"/>
                 </svg>
 
-                <div id='susolosusia'> oh I get it! sans!</ div>
+                {/* <div id='layertesting'> layer testing</ div> */}
                 
 
                 <Watermarks />
@@ -85,9 +85,8 @@ class LargeVideo extends Component<Props> {
                 {/* <svg width="900" height="9000">
                     <circle cx="25" cy="25" r="900" fill="purple" opacity="1.0"/>
                 </svg> */}
-                {/* <svg id= 'fanboy'></ svg> */}
                 {createAd()}
-                {/* <div id = 'adTest'> oh I get it! sans!</ div> */}
+                {/* <div id = 'adTest'></ div> */}
                 {/* {timeAd()} */}
                 { interfaceConfig.DISABLE_TRANSCRIPTION_SUBTITLES
                     || <Captions /> }
@@ -111,11 +110,8 @@ function addText(){
 function createAd(){
     // node = this.node;
     setTimeout(() => {
-        // document.getElementById('fanboy').innerHTML = 'meg';
-        document.getElementById('subway').remove();
+        document.getElementById('adPlaceHolder').remove();
     }, 7000);
-    // var svgContainer = document.getElementById('fanboy').append("svg").attr('height', 300).attr('width', 400);
-    // var myDickIsARectangularPrism = svgContainer.append("circle")
     //     .attr('cx', 30)
     //     .attr('cy', 30)
     //     .attr('r', 20);
