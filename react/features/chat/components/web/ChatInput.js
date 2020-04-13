@@ -35,17 +35,7 @@ type Props = {
     /**
      * Invoked to obtain translated strings.
      */
-    t: Function,
-
-    /**
-     * Boolean for chat to be censored.
-     */
-    censoredChat: boolean,
-
-    /**
-     * Array of strings for added words to the censor
-     */
-    addedCensoredWords: Array<string>
+    t: Function
 };
 
 /**
@@ -170,7 +160,6 @@ class ChatInput extends Component<Props, State> {
      * @returns {void}
      */
     _onDetectSubmit(event) {
-        // console.log(APP.store);
         if (event.keyCode === 13
             && event.shiftKey === false) {
             event.preventDefault();
@@ -178,23 +167,11 @@ class ChatInput extends Component<Props, State> {
             const filter = new Filter();
             let trimmed = '';
 
-            for (let i = 0; i < this.props.addedCensoredWords.length; i++) {
-                filter.addWords(this.props.addedCensoredWords[i]);
-            }
-
-            console.log(this.props.addedCensoredWords);
-
-            console.log(this.props.censoredChat);
-            if (this.props.censoredChat === true) {
-                if (filter.clean(this.state.message) !== this.state.message) {
-                    trimmed = filter.clean(this.state.message);
-                } else if (filter.clean(this.state.message) === this.state.message) {
-                    trimmed = this.state.message.trim();
-                }
-            } else {
+            if (filter.clean(this.state.message) !== this.state.message) {
+                trimmed = '[This message contains inappropriate content]';
+            } else if (filter.clean(this.state.message) === this.state.message) {
                 trimmed = this.state.message.trim();
             }
-
 
             // const trimmed = filter.clean(this.state.message.trim());
 
@@ -266,19 +243,4 @@ class ChatInput extends Component<Props, State> {
     }
 }
 
-/**
- * Maps part of the redux state to the component's props.
- *
- * @param {Object} state - Returns redux state.
- * @returns {boolean}
- */
-function mapStateToProps(state) {
-
-    return {
-        censoredChat: state['features/chat'].isChatCensored,
-        addedCensoredWords: state['features/chat'].addedCensoredWords
-    };
-}
-
-
-export default translate(connect(mapStateToProps)(ChatInput));
+export default translate(connect()(ChatInput));

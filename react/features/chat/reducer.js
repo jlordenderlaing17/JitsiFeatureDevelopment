@@ -6,22 +6,15 @@ import {
     ADD_MESSAGE,
     CLEAR_MESSAGES,
     SET_PRIVATE_MESSAGE_RECIPIENT,
-    TOGGLE_CHAT,
-    TOGGLE_CENSOR,
-    CENSOR_UPDATE,
-    RESET_FILTER
+    TOGGLE_CHAT
 } from './actionTypes';
 
 const DEFAULT_STATE = {
     isOpen: false,
     lastReadMessage: undefined,
     messages: [],
-    privateMessageRecipient: undefined,
-    isChatCensored: true,
-    addedCensoredWords: []
+    privateMessageRecipient: undefined
 };
-
-let tempWords = [];
 
 ReducerRegistry.register('features/chat', (state = DEFAULT_STATE, action) => {
     switch (action.type) {
@@ -47,8 +40,6 @@ ReducerRegistry.register('features/chat', (state = DEFAULT_STATE, action) => {
                 ...state.messages,
                 newMessage
             ];
-
-        console.log(messages);
 
         return {
             ...state,
@@ -80,32 +71,6 @@ ReducerRegistry.register('features/chat', (state = DEFAULT_STATE, action) => {
                 navigator.product === 'ReactNative' ? 0 : state.messages.length - 1],
             privateMessageRecipient: state.isOpen ? undefined : state.privateMessageRecipient
         };
-
-    case TOGGLE_CENSOR:
-        console.log('woahahahahahahhaha');
-
-        return {
-            ...state,
-            isChatCensored: !state.isChatCensored
-        };
-
-    case CENSOR_UPDATE:
-        console.log('updating censor...');
-        tempWords.push(action.newWord);
-
-        return {
-            ...state,
-            addedCensoredWords: tempWords
-        };
-
-    case RESET_FILTER:
-        console.log('go to reducer');
-
-        return {
-            ...state,
-            addedCensoredWords: []
-        };
-
     }
 
     return state;

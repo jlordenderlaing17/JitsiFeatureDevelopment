@@ -13,7 +13,7 @@ type Props = {
   /**
    * The messages array to render.
    */
-  messages: Array<Object>,
+  messages: Array<Object>
 }
 
 /**
@@ -38,8 +38,6 @@ export default class ChatMessageGroup extends Component<Props> {
      * @inheritdoc
      */
     render() {
-        console.log('here');
-
         return (
             <FlatList
                 data = { this.props.messages }

@@ -55,32 +55,3 @@ export const SET_PRIVATE_MESSAGE_RECIPIENT = 'SET_PRIVATE_MESSAGE_RECIPIENT';
  * }
  */
 export const TOGGLE_CHAT = 'TOGGLE_CHAT';
-
-
-/**
- * The type of the action which signals to toggle the censor feature.
- *
- * {
- *      type: TOGGLE_CENSOR
- * }
- */
-export const TOGGLE_CENSOR = 'TOGGLE_CENSOR';
-
-
-/**
- * The type of the action which signals new words to be added to the censor library.
- *
- * {
- *      type: CENSOR_UPDATE
- * }
- */
-export const CENSOR_UPDATE = 'CENSOR_UPDATE';
-
-/**
- * The type of the action that reset the censor filter's words that were added by the moderator.
- *
- * {
- *      type: RESET_FILTER
- * }
- */
-export const RESET_FILTER = 'RESET_FILTER';

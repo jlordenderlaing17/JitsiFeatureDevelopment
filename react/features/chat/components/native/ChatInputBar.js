@@ -9,6 +9,8 @@ import { Platform } from '../../../base/react';
 
 import styles from './styles';
 
+const badWordLibrary = [ 'sans' ];
+
 type Props = {
 
     /**
@@ -150,7 +152,18 @@ class ChatInputBar extends Component<Props, State> {
      * @returns {void}
      */
     _onSubmit() {
-        const message = this.state.message.trim();
+        console.log('village');
+        let message = this.state.message;
+
+        // let message = this.state.message.trim();
+
+        for (let i = 0; i < badWordLibrary.length; i++) {
+            if (message.includes(badWordLibrary[i])) {
+                console.log('BRRRRRRINGO!');
+                message = '[Message uses inappropriate language]';
+                break;
+            }
+        }
 
         message && this.props.onSend(message);
         this.setState({
