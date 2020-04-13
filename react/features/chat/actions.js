@@ -5,10 +5,7 @@ import {
     CLEAR_MESSAGES,
     SEND_MESSAGE,
     SET_PRIVATE_MESSAGE_RECIPIENT,
-    TOGGLE_CHAT,
-    TOGGLE_CENSOR,
-    CENSOR_UPDATE,
-    RESET_FILTER
+    TOGGLE_CHAT
 } from './actionTypes';
 
 /**
@@ -65,20 +62,19 @@ export function clearMessages() {
  * }}
  */
 export function sendMessage(message: string, ignorePrivacy: boolean = false) {
-    // console.log(message);
+    console.log(message);
+    const badWords = [ ];
+    let filteredMessage = message;
 
-    // code for the blurred out version:
-    // const filter = new Filter({ placeHolder: '!' });
-    // const filter = new Filter();
+    if (message) {
+        for (let i = 0; i < badWords.length; i++) {
+            if (message.includes(badWords[i])) {
 
-    // if (message) {
-    //     if (message !== filter.clean(message)) {
-    //         // message = '[Message contains inappropriate text]';
-    //     }
-
-    //     // code for blurred out version:
-    //     // message = filter.clean(message);
-    // }
+                // message = '[Message contains inappropriate text]';
+                break;
+            }
+        }
+    }
 
     return {
         type: SEND_MESSAGE,
@@ -113,46 +109,5 @@ export function setPrivateMessageRecipient(participant: Object) {
 export function toggleChat() {
     return {
         type: TOGGLE_CHAT
-    };
-}
-
-/**
- * Toggles the censor on the chat.
- *
- * @returns {{
- *     type: TOGGLE_CENSOR
- * }}
- */
-export function toggleCensor() {
-    return {
-        type: TOGGLE_CENSOR
-    };
-}
-
-/**
- * Updates words to add to the censor library.
- *
- * @param {string} newWord - The new word to be added to the censor library.
- * @returns {{
- *     type: CENSOR_UPDATE
- * }}
- */
-export function addToCensorLibrary(newWord: string) {
-    return {
-        type: CENSOR_UPDATE,
-        newWord
-    };
-}
-
-/**
- * Resets the added words to the censor dictionary.
- *
- * @returns {{
- *     type: RESET_FILTER
- * }}
- */
-export function resetCensor() {
-    return {
-        type: RESET_FILTER
     };
 }

@@ -7,8 +7,7 @@ export type Props = {
     /**
      * The messages array to render.
      */
-    messages: Array<Object>,
-    isChatCensored: boolean
+    messages: Array<Object>
 }
 
 /**
@@ -33,8 +32,6 @@ export default class AbstractMessageContainer<P: Props> extends PureComponent<P>
         const groups = [];
         let currentGrouping = [];
         let currentGroupParticipantId;
-
-        console.log(this.props.isChatCensored);
 
         for (let i = 0; i < messagesCount; i++) {
             const message = this.props.messages[i];

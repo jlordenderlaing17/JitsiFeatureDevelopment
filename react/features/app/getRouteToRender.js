@@ -7,7 +7,6 @@ import { isRoomValid } from '../base/conference';
 import { toState } from '../base/redux';
 import { isSupportedBrowser } from '../base/environment';
 import { Conference } from '../conference';
-import { AdComponent } from '../ad';
 import { getDeepLinkingPage } from '../deep-linking';
 import { UnsupportedDesktopBrowser } from '../unsupported-browser';
 import {
@@ -99,7 +98,6 @@ function _getWebConferenceRoute(state): ?Promise<Route> {
             if (deepLinkComponent) {
                 route.component = deepLinkComponent;
             } else if (isSupportedBrowser()) {
-                // route.component = AdComponent;
                 route.component = Conference;
             } else {
                 route.component = UnsupportedDesktopBrowser;

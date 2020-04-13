@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 
-import TextareaAutosize from 'react-textarea-autosize';
-
 import {
     ACTION_SHORTCUT_TRIGGERED,
     createShortcutEvent,
@@ -13,8 +11,6 @@ import {
 import { openDialog, toggleDialog } from '../../../base/dialog';
 import { translate } from '../../../base/i18n';
 import {
-    IconCensor,
-    IconCensorReset,
     IconChat,
     IconExitFullScreen,
     IconFeedback,
@@ -88,8 +84,6 @@ import VideoMuteButton from '../VideoMuteButton';
 import {
     ClosedCaptionButton
 } from '../../../subtitles';
-import { toggleCensor, addToCensorLibrary, resetCensor } from '../../../chat/actions';
-
 
 /**
  * The type of the React {@code Component} props of {@link Toolbox}.
@@ -144,16 +138,6 @@ type Props = {
     _hideInviteButton: boolean,
 
     /**
-     * Whether or not the ability to censor the chat should be visible,
-     */
-    _hideCensorButton: boolean,
-
-    /**
-     * Whether or not a user can add to the censor dictionary.
-     */
-    _hideCensorAdd: boolean,
-
-    /**
      * Whether or not the current user is logged in through a JWT.
      */
     _isGuest: boolean,
@@ -206,12 +190,7 @@ type Props = {
     /**
      * Invoked to obtain translated strings.
      */
-    t: Function,
-
-    /**
-     * Boolean to indicate the state of the censor toggle.
-     */
-    censoredChat: boolean
+    t: Function
 };
 
 /**
@@ -222,7 +201,6 @@ type State = {
     /**
      * The width of the browser's window.
      */
-    message: string,
     windowWidth: number
 };
 
@@ -254,12 +232,6 @@ class Toolbox extends Component<Props, State> {
         this._onResize = this._onResize.bind(this);
         this._onSetOverflowVisible = this._onSetOverflowVisible.bind(this);
 
-        // TOGGLE CHAT:
-        this._onCensorToggle = this._onCensorToggle.bind(this);
-        this._setTextAreaRef = this._setTextAreaRef.bind(this);
-        this._onMessageChange = this._onMessageChange.bind(this);
-        this._onDetectSubmit = this._onDetectSubmit.bind(this);
-        this._onResetCensor = this._onResetCensor.bind(this);
         this._onShortcutToggleChat = this._onShortcutToggleChat.bind(this);
         this._onShortcutToggleFullScreen = this._onShortcutToggleFullScreen.bind(this);
         this._onShortcutToggleRaiseHand = this._onShortcutToggleRaiseHand.bind(this);
@@ -530,78 +502,6 @@ class Toolbox extends Component<Props, State> {
      */
     _doToggleTileView() {
         this.props.dispatch(toggleTileView());
-    }
-
-    // TOGGLE CENSOR:
-    _onCensorToggle: () => void;
-
-    /**
-     * Executes the redux action to alter the boolean that censors the chat.
-     *
-     * @private
-     * @returns {void}
-     */
-    _onCensorToggle() {
-        console.log('toggle censor');
-        this.props.dispatch(toggleCensor());
-    }
-
-    _onResetCensor: () => void;
-
-    /**
-     * Executes redux action to reset the added words to the censor dictionary.
-     *
-     * @returns {void}
-     */
-    _onResetCensor() {
-        this.props.dispatch(resetCensor());
-    }
-
-    _setTextAreaRef: (?HTMLTextAreaElement) => void;
-
-    /**
-     * Sets the reference to the HTML TextArea.
-     *
-     * @param {HTMLAudioElement} textAreaElement - The HTML text area element.
-     * @private
-     * @returns {void}
-     */
-    _setTextAreaRef(textAreaElement: ?HTMLTextAreaElement) {
-        this._textArea = textAreaElement;
-    }
-
-    _onMessageChange: (Object) => void;
-
-    /**
-     * Updates the known message the user is drafting.
-     *
-     * @param {string} event - Keyboard event.
-     * @private
-     * @returns {void}
-     */
-    _onMessageChange(event) {
-        this.setState({ message: event.target.value });
-    }
-
-    _onDetectSubmit: (Object) => void;
-
-    /**
-     * Detects if enter has been pressed. If so, submit the message in the chat
-     * window.
-     *
-     * @param {string} event - Keyboard event.
-     * @private
-     * @returns {void}
-     */
-    _onDetectSubmit(event) {
-        if (event.keyCode === 13
-            && event.shiftKey === false) {
-            // console.log(APP.store);
-            console.log('word to be added: ');
-            console.log(this.state.message);
-            this.props.dispatch(addToCensorLibrary(this.state.message.trim()));
-            this.setState({ message: '' });
-        }
     }
 
     _onMouseOut: () => void;
@@ -1227,10 +1127,7 @@ class Toolbox extends Component<Props, State> {
             _hideInviteButton,
             _overflowMenuVisible,
             _raisedHand,
-            t,
-            censoredChat,
-            _hideCensorButton,
-            _hideCensorAdd
+            t
         } = this.props;
         const overflowMenuContent = this._renderOverflowMenuContent();
         const overflowHasItems = Boolean(overflowMenuContent.filter(child => child).length);
@@ -1261,20 +1158,6 @@ class Toolbox extends Component<Props, State> {
         if (this._shouldShowButton('closedcaptions')) {
             buttonsLeft.push('closedcaptions');
         }
-
-        // adding toggle button:
-        if (!_hideCensorButton) {
-            buttonsLeft.push('togglecensor');
-        }
-
-        if (!_hideCensorAdd) {
-            buttonsLeft.push('censoradd');
-        }
-
-        if (!_hideCensorAdd) {
-            buttonsLeft.push('censorreset');
-        }
-
         if (overflowHasItems) {
             buttonsRight.push('overflowmenu');
         }
@@ -1345,29 +1228,6 @@ class Toolbox extends Component<Props, State> {
                                 tooltip = { t('toolbar.chat') } />
                             <ChatCounter />
                         </div> }
-                    { buttonsLeft.indexOf('togglecensor') !== -1
-                        && <ToolbarButton
-                            accessibilityLabel = { t('toolbar.accessibilityLabel.toggleCensor') }
-                            icon = { IconCensor }
-                            onClick = { this._onCensorToggle }
-                            toggled = { censoredChat }
-                            tooltip = { t('toolbar.toggleCensor') } /> }
-                    { buttonsLeft.indexOf('censoradd') !== -1
-                        && <TextareaAutosize
-                            id = 'censoradd'
-                            inputRef = { this._setTextAreaRef }
-                            maxRows = { 1 }
-                            onChange = { this._onMessageChange }
-                            onKeyDown = { this._onDetectSubmit }
-                            placeholder = { 'Censor words' }
-                            value = { this.state.message } /> }
-                    { buttonsLeft.indexOf('censorreset') !== -1
-                        && <ToolbarButton
-                            accessibilityLabel = { t('toolbar.accessibilityLabel.resetCensor') }
-                            icon = { IconCensorReset }
-                            onClick = { this._onResetCensor }
-                            toggled = { false }
-                            tooltip = { t('toolbar.resetCensor') } /> }
                     {
                         buttonsLeft.indexOf('closedcaptions') !== -1
                             && <ClosedCaptionButton />
@@ -1426,9 +1286,6 @@ class Toolbox extends Component<Props, State> {
      * @returns {boolean} True if the button should be displayed.
      */
     _shouldShowButton(buttonName) {
-        // console.log('BUTTTTTOTONIOFDNINVCIUFBDVBFVIUDBJK CN JHDUYVCFDCGF');
-        // console.log(this.props._visibleButtons);
-
         return this.props._visibleButtons.has(buttonName);
     }
 }
@@ -1491,10 +1348,6 @@ function _mapStateToProps(state) {
         _feedbackConfigured: Boolean(callStatsID),
         _hideInviteButton:
             iAmRecorder || (!addPeopleEnabled && !dialOutEnabled),
-        _hideCensorButton:
-            iAmRecorder || (!addPeopleEnabled && !dialOutEnabled),
-        _hideCensorAdd:
-            iAmRecorder || (!addPeopleEnabled && !dialOutEnabled),
         _isGuest: state['features/base/jwt'].isGuest,
         _fullScreen: fullScreen,
         _tileViewEnabled: state['features/video-layout'].tileViewEnabled,
@@ -1507,8 +1360,7 @@ function _mapStateToProps(state) {
             || sharedVideoStatus === 'start'
             || sharedVideoStatus === 'pause',
         _visible: isToolboxVisible(state),
-        _visibleButtons: equals(visibleButtons, buttons) ? visibleButtons : buttons,
-        censoredChat: state['features/chat'].isChatCensored
+        _visibleButtons: equals(visibleButtons, buttons) ? visibleButtons : buttons
     };
 }
 

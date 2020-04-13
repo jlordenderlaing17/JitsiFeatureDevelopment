@@ -5,7 +5,6 @@ import Emoji from 'react-emoji-render';
 import TextareaAutosize from 'react-textarea-autosize';
 import type { Dispatch } from 'redux';
 import Filter from 'bad-words';
-
 import { translate } from '../../../base/i18n';
 import { connect } from '../../../base/redux';
 
@@ -35,17 +34,7 @@ type Props = {
     /**
      * Invoked to obtain translated strings.
      */
-    t: Function,
-
-    /**
-     * Boolean for chat to be censored.
-     */
-    censoredChat: boolean,
-
-    /**
-     * Array of strings for added words to the censor
-     */
-    addedCensoredWords: Array<string>
+    t: Function
 };
 
 /**
@@ -170,33 +159,16 @@ class ChatInput extends Component<Props, State> {
      * @returns {void}
      */
     _onDetectSubmit(event) {
-        // console.log(APP.store);
         if (event.keyCode === 13
             && event.shiftKey === false) {
             event.preventDefault();
-
+            
             const filter = new Filter();
             let trimmed = '';
 
-            for (let i = 0; i < this.props.addedCensoredWords.length; i++) {
-                filter.addWords(this.props.addedCensoredWords[i]);
-            }
+            this.state.message = filter.clean(this.state.message);
 
-            console.log(this.props.addedCensoredWords);
-
-            console.log(this.props.censoredChat);
-            if (this.props.censoredChat === true) {
-                if (filter.clean(this.state.message) !== this.state.message) {
-                    trimmed = filter.clean(this.state.message);
-                } else if (filter.clean(this.state.message) === this.state.message) {
-                    trimmed = this.state.message.trim();
-                }
-            } else {
-                trimmed = this.state.message.trim();
-            }
-
-
-            // const trimmed = filter.clean(this.state.message.trim());
+            trimmed = this.state.message.trim();
 
             if (trimmed) {
                 this.props.onSend(trimmed);
@@ -205,7 +177,6 @@ class ChatInput extends Component<Props, State> {
             }
         }
     }
-
     _onMessageChange: (Object) => void;
 
     /**
@@ -266,19 +237,4 @@ class ChatInput extends Component<Props, State> {
     }
 }
 
-/**
- * Maps part of the redux state to the component's props.
- *
- * @param {Object} state - Returns redux state.
- * @returns {boolean}
- */
-function mapStateToProps(state) {
-
-    return {
-        censoredChat: state['features/chat'].isChatCensored,
-        addedCensoredWords: state['features/chat'].addedCensoredWords
-    };
-}
-
-
-export default translate(connect(mapStateToProps)(ChatInput));
+export default translate(connect()(ChatInput));

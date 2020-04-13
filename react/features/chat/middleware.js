@@ -19,7 +19,7 @@ import { MiddlewareRegistry, StateListenerRegistry } from '../base/redux';
 import { playSound, registerSound, unregisterSound } from '../base/sounds';
 import { isButtonEnabled, showToolbox } from '../toolbox';
 
-import { SEND_MESSAGE, SET_PRIVATE_MESSAGE_RECIPIENT, TOGGLE_CENSOR } from './actionTypes';
+import { SEND_MESSAGE, SET_PRIVATE_MESSAGE_RECIPIENT } from './actionTypes';
 import { addMessage, clearMessages, toggleChat } from './actions';
 import { ChatPrivacyDialog } from './components';
 import { INCOMING_MSG_SOUND_ID, MESSAGE_TYPE_ERROR, MESSAGE_TYPE_LOCAL, MESSAGE_TYPE_REMOTE } from './constants';
@@ -76,7 +76,6 @@ MiddlewareRegistry.register(store => next => action => {
             } else {
                 // Sending the message if privacy notice doesn't need to be shown.
 
-                // not it
                 if (typeof APP !== 'undefined') {
                     APP.API.notifySendingChatMessage(action.message);
                 }
@@ -97,16 +96,6 @@ MiddlewareRegistry.register(store => next => action => {
     case SET_PRIVATE_MESSAGE_RECIPIENT: {
         _maybeFocusField();
         break;
-    }
-
-    case TOGGLE_CENSOR: {
-        console.log('keemstar screams');
-        console.log(store);
-        const state = store.getState();
-        const { conference } = state['features/base/conference'];
-
-        console.log(conference);
-
     }
     }
 
@@ -222,8 +211,6 @@ function _handleChatError({ dispatch }, error) {
 function _handleReceivedMessage({ dispatch, getState }, { id, message, nick, privateMessage, timestamp }) {
     // Logic for all platforms:
     const state = getState();
-
-    console.log(state);
     const { isOpen: isChatOpen } = state['features/chat'];
 
     if (!isChatOpen) {
