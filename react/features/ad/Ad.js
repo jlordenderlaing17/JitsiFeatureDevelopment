@@ -14,7 +14,7 @@ class AdComponent extends React.Component {
     render(){
         return(
             <div>
-            sans!?! fanboy!?!?!
+                Ad attempt 1
             </ div>
         )
     }
